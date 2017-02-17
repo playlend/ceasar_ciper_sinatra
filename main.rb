@@ -1,3 +1,6 @@
+require 'sinatra'
+require 'sinatra/reloader'
+
 def cipher (sentence, shift_value)
 	shift_value = shift_value.to_i
 	letters = sentence.split("")
@@ -38,8 +41,15 @@ def cipher (sentence, shift_value)
 end
 
 #prompt user for a sentence
+=begin
 print "Please, enter a sentence to encrypt: "
 sentence = gets.chomp
 print "Please, enter a shift value (0-10): "
 shift_value = gets.chomp
 cipher(sentence,shift_value)
+=end
+
+get '/' do
+	erb :index
+end
+
