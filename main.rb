@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'sinatra/reloader'
+#require 'sinatra/reloader'
 
 def cipher (sentence, shift_value)
 	shift_value = shift_value.to_i
@@ -35,21 +35,23 @@ def cipher (sentence, shift_value)
 		index += 1
 	end
 	
-	puts letters.join.capitalize
-	
-	
+	result = letters.join.capitalize
+	result	
 end
-
-#prompt user for a sentence
-=begin
-print "Please, enter a sentence to encrypt: "
-sentence = gets.chomp
-print "Please, enter a shift value (0-10): "
-shift_value = gets.chomp
-cipher(sentence,shift_value)
-=end
 
 get '/' do
 	erb :index
 end
 
+post '/result' do
+	if params[:sentence] != ""
+		if params[:shift_value] != "" && (params[:shift_value].to_i >= 0 && params[:shift_value].to_i <= 10)
+			encrypted_sentence = cipher(params[:sentence],params[:shift_value])
+			erb :result, :locals => { :sentence=>encrypted_sentence }
+		else
+			erb :index
+		end
+	else
+		erb :index
+	end
+end
